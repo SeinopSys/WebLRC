@@ -1,23 +1,6 @@
 import { Dialog } from "./dialog";
 import { Key } from "./utils/Key";
 
-$("#logout-link").on("click", function (e) {
-  e.preventDefault();
-
-  Dialog.confirm({
-    title: $(this).text().trim(),
-    handlerFunc: (sure) => {
-      if (!sure) return;
-
-      Dialog.wait(false);
-
-      $.post("/logout", () => {
-        window.location.href = "/";
-      });
-    },
-  });
-});
-
 $(document.body).on("keydown", (e) => {
   if (!Dialog.isOpen() || e.keyCode !== Key.Tab) return;
 

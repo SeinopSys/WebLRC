@@ -11,14 +11,11 @@ import { LRCParser } from "./LRCParser";
 import { LRCString, LRCStringJsonValue } from "./LRCString";
 import { MetadataEditingForm } from "./MetadataEditingForm";
 import { isCtrlKeyPressed, isShiftKeyPressed, Key } from "../utils/Key";
+import { buildLrcOutput } from "./lrcExport";
+import { isValidBackupData, parseBackupJson } from "./backup";
 import pageProps from "../page-props.json";
 import $ from "jquery";
 import type JQuery from "jquery";
-
-interface ValidBackupData {
-  metadata: Record<string, unknown>;
-  timings: LRCStringJsonValue[];
-}
 
 export class TimingEditor {
   protected mergedOutputStrategy: boolean;
@@ -164,7 +161,14 @@ export class TimingEditor {
       e.preventDefault();
 
       this.storeTimings();
-      this.exportEmbeddedAudioFile(this.getExportLrcFileText(false));
+      this.exportEmbeddedAudioFile(
+        buildLrcOutput(
+          this.timings,
+          this.getCurrentMetadata(),
+          this.mergedOutputStrategy,
+          false,
+        ),
+      );
     });
     this.$lrcimportaudiobtn.on("click", (e) => {
       e.preventDefault();
@@ -353,7 +357,7 @@ export class TimingEditor {
     $(window).on("beforeunload", (e: BeforeUnloadEvent) => {
       if (!this.isEditorEmpty()) {
         const backupContents = this.createBackup();
-        if (this.isUsefulBackupData(this.parseBackupData(backupContents))) {
+        if (isValidBackupData(parseBackupJson(backupContents))) {
           localStorage.setItem(backupLocalStorageKey, backupContents);
         }
         e.preventDefault();
@@ -361,8 +365,8 @@ export class TimingEditor {
       }
     });
     const backupData = localStorage.getItem(backupLocalStorageKey);
-    const parsedBackupData = this.parseBackupData(backupData);
-    const hasBackupData = this.isUsefulBackupData(parsedBackupData);
+    const parsedBackupData = parseBackupJson(backupData);
+    const hasBackupData = isValidBackupData(parsedBackupData);
     this.toggleBackupButtons(hasBackupData);
     this.$restoreBackupBtn.on("click", (e) => {
       e.preventDefault();
@@ -499,31 +503,6 @@ export class TimingEditor {
     this.setMetadata(backup.metadata);
     this.setTimings(
       backup.timings.map((t: LRCStringJsonValue) => new LRCString(t)),
-    );
-  }
-
-  private parseBackupData(data: unknown): unknown | null {
-    if (typeof data === "string" && data.trim().length > 0) {
-      try {
-        return JSON.parse(data);
-      } catch (e) {
-        console.error(e);
-      }
-    }
-
-    return null;
-  }
-
-  private isUsefulBackupData(data: unknown): data is ValidBackupData {
-    return (
-      typeof data === "object" &&
-      data !== null &&
-      "metadata" in data &&
-      typeof data.metadata === "object" &&
-      data.metadata !== null &&
-      "timings" in data &&
-      Array.isArray(data.timings) &&
-      data.timings.every((item) => LRCString.isValidJsonData(item))
     );
   }
 
@@ -985,51 +964,18 @@ export class TimingEditor {
   }
 
   exportLRCFile(includeMetadata = true): void {
-    const output = this.getExportLrcFileText(includeMetadata);
+    const output = buildLrcOutput(
+      this.timings,
+      this.getCurrentMetadata(),
+      this.mergedOutputStrategy,
+      includeMetadata,
+    );
     const basename =
       this.lastLRCFilename || this.pluginScope.player.getFileName() || "Lyrics";
     const filename = `${basename}.lrc`;
 
     const blob = new Blob([output], { type: "text/plain;charset=utf-8" });
     saveAs(blob, filename);
-  }
-
-  private getExportLrcFileText(includeMetadata = true): string {
-    let outputArr: string[] = [];
-    if (includeMetadata) {
-      const metadata = this.getCurrentMetadata();
-      $.each(metadata, (k, v) => {
-        let value = v;
-        if (value !== "") {
-          switch (k) {
-            case "offset":
-              if (value === "0") return;
-              break;
-            case "length":
-              value = ` ${value}`;
-              break;
-          }
-          outputArr.push(`[${k}:${value}]`);
-        }
-      });
-    }
-    if (this.mergedOutputStrategy) {
-      const strings: Record<string, string[]> = {};
-      $.each(this.timings, (i, el) => {
-        if (typeof strings[el.str] === "undefined") strings[el.str] = [];
-
-        strings[el.str].push(el.ts.toString(true));
-      });
-      $.each(strings, (str: string, tsArr: string[]) => {
-        outputArr.push(`[${tsArr.join("][")}]${str}`);
-      });
-    } else {
-      outputArr = [
-        ...outputArr,
-        ...this.timings.map((el) => `[${el.ts.toString(true)}]${el.str}`),
-      ];
-    }
-    return `${outputArr.join("\n")}\n`;
   }
 
   private exportEmbeddedAudioFile(lyrics: string) {

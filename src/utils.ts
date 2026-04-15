@@ -41,8 +41,6 @@ export const capitalize = (str: string, all = false): string => {
     : str[0].toUpperCase() + str.substring(1);
 };
 
-export const strRepeat = (str: string, times = 1): string =>
-  new Array(times + 1).join(str);
 export const pad = (
   str: string | { toString(): string },
   char = "0",
@@ -115,92 +113,4 @@ export const setElDisabled = ($el: JQuery, disabled: boolean): void => {
     return;
   }
   $el.removeAttr("disabled");
-};
-
-let $notif: JQuery | undefined;
-/**
- * Copy any text to clipboard
- * Must be called from within an event handler
- */
-export const copy = (
-  text: string,
-  e: { clientY: number; clientX: number },
-): boolean => {
-  if (!document.queryCommandSupported("copy")) {
-    prompt("Copy with Ctrl+C, close with Enter", text);
-    return true;
-  }
-
-  const $helper = $(document.createElement("textarea"));
-  let success = false;
-  $helper
-    .css({
-      opacity: 0,
-      width: 0,
-      height: 0,
-      position: "fixed",
-      left: "-10px",
-      top: "50%",
-      display: "block",
-    })
-    .text(text)
-    .appendTo("body")
-    .focus();
-  $helper.get(0)?.select();
-
-  try {
-    success = document.execCommand("copy");
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (err) {
-    /* ignore */
-  }
-
-  setTimeout(() => {
-    $helper.remove();
-    if (typeof $notif === "undefined" || e) {
-      if (typeof $notif === "undefined")
-        $notif = $(document.createElement("span"))
-          .attr({
-            id: "copy-notify",
-            class: `alert alert-${success ? "success" : "danger"}`,
-          })
-          .html(
-            `<span class="fa fa-copy"></span> <span class="fa fa-${success ? "check" : "times"}"></span>`,
-          )
-          .appendTo($(document.body));
-      if (e) {
-        const w = $notif.outerWidth() || 0;
-        const h = $notif.outerHeight() || 0;
-        const top = e.clientY - h / 2;
-        $notif
-          .stop()
-          .css({
-            top,
-            left: e.clientX - w / 2,
-            bottom: "initial",
-            right: "initial",
-            opacity: 1,
-          })
-          .animate(
-            {
-              top: top - 20,
-              opacity: 0,
-            },
-            600,
-            function () {
-              $(this).remove();
-              $notif = undefined;
-            },
-          );
-        return;
-      }
-      $notif.fadeTo("fast", 1);
-    } else $notif.stop().css("opacity", 1);
-    $notif.delay(success ? 300 : 1000).fadeTo("fast", 0, function () {
-      $(this).remove();
-      $notif = undefined;
-    });
-  }, 1);
-
-  return true;
 };

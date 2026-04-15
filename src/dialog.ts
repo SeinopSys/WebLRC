@@ -1,6 +1,5 @@
 import { Modal } from "bootstrap";
 import { isKey, Key } from "./utils/Key";
-import { Time } from "./utils/Time";
 import { callCallback, capitalize, setElDisabled } from "./utils";
 import pageProps from "./page-props.json";
 import $ from "jquery";
@@ -298,8 +297,6 @@ class DialogManager {
       this.modalInstance.show();
       this.$dialogOverlay.one("shown.bs.modal", () => {
         this.setFocus();
-        Time.update();
-
         callCallback({
           func: callback,
           params: [$requestContentDiv as never],

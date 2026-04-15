@@ -17,10 +17,11 @@ export class Duration {
       return;
     }
 
-    this.setSeconds(
-      this.ignoreMs ? Math.ceil(seconds) : roundTo(seconds, LRC_TS_DECIMALS),
-    );
-    this.valid = true;
+    const value = this.ignoreMs
+      ? Math.ceil(seconds)
+      : roundTo(seconds, LRC_TS_DECIMALS);
+    this.setSeconds(value);
+    this.valid = !Number.isNaN(this.seconds);
   }
 
   /**
