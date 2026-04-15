@@ -1,0 +1,97 @@
+@import "vars";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/bootstrap";
+@import "theme_dialog";
+@import url('https://fonts.googleapis.com/css?family=Catamaran:400,700&subset=latin-ext,latin&display=swap');
+
+.invisible {
+  visibility: hidden
+}
+
+.js-required {
+  display: inline-block;
+  background: url('../img/js.svg') no-repeat center;
+  background-size: contain;
+  width: .8em;
+  height: .8em;
+  margin-left: .3em;
+  cursor: help;
+  transform: rotate(5deg);
+  border: 1px solid black;
+}
+
+* {
+  outline: none;
+}
+
+html {
+  font-size: 100%;
+  height: 100%;
+  background-color: #fff;
+}
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: $font-family;
+
+  #wrap {
+    background: #678ecb;
+  }
+
+  > footer {
+    @extend %footer
+  }
+}
+
+.pagination-wrapper {
+  text-align: center;
+}
+
+.alert-out-of-bounds {
+  margin-bottom: 0;
+}
+
+nav.navbar.fixed-top {
+  @include media-breakpoint-down(md) {
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+
+  + :not(.start-at-top) {
+    // height + border
+    margin-top: $nav-link-height + ($navbar-padding-y * 2);
+  }
+}
+
+.card-body > {
+  :first-child {
+    margin-top: 0;
+  }
+
+  :last-child {
+    margin-bottom: 0;
+  }
+}
+
+.custom-control-label {
+  line-height: 1.7;
+}
+
+#copy-notify {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  opacity: 0;
+  z-index: 22000;
+  font-size: 1.75rem;
+}
+
+time[datetime][title] {
+  display: inline-block;
+  line-height: 1em;
+  border-bottom: 1px dotted;
+  cursor: help;
+}

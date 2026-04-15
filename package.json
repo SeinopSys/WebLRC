@@ -1,0 +1,62 @@
+{
+  "name": "web-lrc",
+  "version": "1.0.0",
+  "description": "Standalone HTML5 + JavaScript-based LRC lyrics file editor",
+  "keywords": [
+    "lrc",
+    "editor",
+    "bootstrap"
+  ],
+  "homepage": "https://github.com/SeinopSys/WebLRC#readme",
+  "bugs": {
+    "url": "https://github.com/SeinopSys/WebLRC/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SeinopSys/WebLRC.git"
+  },
+  "license": "MIT",
+  "author": "SeinopSys <david@seinopsys.dev> (https://seinopsys.dev)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "vite --open",
+    "lint": "eslint src --ext .js,.ts",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.2.0",
+    "blob-polyfill": "^9.0.20240710",
+    "bootstrap": "^5.3.3",
+    "date-fns": "^4.1.0",
+    "file-saver": "^2.0.5",
+    "jquery": "^3.7.1",
+    "jsmediatags": "^3.9.7",
+    "mp3tag.js": "^3.16.0",
+    "throttle-debounce": "^5.0.2",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@parcel/transformer-sass": "^2.16.4",
+    "@types/bootstrap": "^5.2.10",
+    "@types/file-saver": "^2.0.7",
+    "@types/jquery": "^4.0.0",
+    "@types/jsmediatags": "^3.9.6",
+    "@types/throttle-debounce": "^5.0.2",
+    "buffer": "^6.0.3",
+    "eslint": "^10.2.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "globals": "^17.5.0",
+    "jiti": "^2.6.1",
+    "prettier": "3.8.3",
+    "sass": "^1.77.0",
+    "typescript-eslint": "^8.58.2",
+    "vite": "^8.0.8"
+  }
+}
