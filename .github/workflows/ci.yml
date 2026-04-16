@@ -29,6 +29,19 @@ jobs:
       - name: Run linting
         run: npm run lint
 
-      - name: Run tests
+      - name: Run unit tests
         run: npm test -- --run
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: playwright-
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run e2e tests
+        run: npm run test:e2e
 

@@ -54,10 +54,10 @@ test("dialog contains sync mode description", async ({ page }) => {
   await expect(page.locator("#dialogContent")).toContainText("sync mode");
 });
 
-test("clicking Close removes the dialog", async ({ page }) => {
+test("clicking Close hides the dialog", async ({ page }) => {
   await page.click("#shortcut-info");
   await waitForDialog(page);
   await clickDialogButton(page, "Close");
   await waitForDialogClosed(page);
-  await expect(page.locator("#dialogOverlay")).toHaveCount(0);
+  await expect(page.locator("#dialogOverlay")).not.toBeVisible();
 });

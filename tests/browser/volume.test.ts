@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { gotoApp } from "./helpers";
+import { gotoApp, waitForEditor } from "./helpers";
 
 test.beforeEach(async ({ page }) => {
   await gotoApp(page);
@@ -47,6 +47,6 @@ test("volume setting persists across page reloads", async ({ page }) => {
   await expect(page.locator("#volumedisp")).toContainText("60%");
 
   await page.reload();
-  await page.locator(".editor.mode-edit").waitFor();
+  await waitForEditor(page);
   await expect(page.locator("#volumedisp")).toContainText("60%");
 });

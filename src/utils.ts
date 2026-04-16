@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 // Convert .serializeArray() result to object
 export const mkData = <El extends HTMLElement>(
   $el: JQuery<El>,

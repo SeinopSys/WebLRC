@@ -1,8 +1,8 @@
+import $ from "jquery";
 import { Modal } from "bootstrap";
 import { isKey, Key } from "./utils/Key";
 import { callCallback, capitalize, setElDisabled } from "./utils";
 import pageProps from "./page-props.json";
-import $ from "jquery";
 import ClickEvent = JQuery.ClickEvent;
 
 type DialogType = "fail" | "success" | "wait" | "request" | "confirm" | "info";
@@ -295,7 +295,8 @@ class DialogManager {
         keyboard: false,
       });
       this.modalInstance.show();
-      this.$dialogOverlay.one("shown.bs.modal", () => {
+      const onModalShown = () => {
+        overlayEl.removeEventListener("shown.bs.modal", onModalShown);
         this.setFocus();
         callCallback({
           func: callback,
@@ -318,7 +319,8 @@ class DialogManager {
             "fast",
           );
         }
-      });
+      };
+      overlayEl.addEventListener("shown.bs.modal", onModalShown);
     }
   }
 
@@ -502,7 +504,10 @@ class DialogManager {
     }
 
     this.modalInstance.hide();
-    this.$dialogOverlay.one("hidden.bs.modal", () => {
+    const overlayEl = this.$dialogOverlay.get(0);
+    if (!overlayEl) return;
+    const onModalHidden = () => {
+      overlayEl.removeEventListener("hidden.bs.modal", onModalHidden);
       this.$dialogOverlay.remove();
       this.open = undefined;
       this.restoreFocus();
@@ -510,7 +515,8 @@ class DialogManager {
         func: callback,
         params: [true],
       });
-    });
+    };
+    overlayEl.addEventListener("hidden.bs.modal", onModalHidden);
   }
 
   clearNotice(regexp?: RegExp): boolean {

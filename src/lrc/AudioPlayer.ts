@@ -213,7 +213,7 @@ export class AudioPlayer {
     this.$volumedisp.text(`${pad(Math.round(localFloat * 100), " ", 3)}%`);
     if (window.localStorage)
       localStorage.setItem("lrc-vol", String(localFloat));
-    this.audio.volume = float;
+    this.audio.volume = localFloat;
   }
 
   updateVolumeButtons(newVol: number): void {

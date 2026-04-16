@@ -5,11 +5,13 @@ import { AudioPlayer } from "./lrc/AudioPlayer";
 import { PluginScope } from "./lrc/PluginScope";
 import { TimingEditor } from "./lrc/TimingEditor";
 import $ from "jquery";
+import { Modal } from "bootstrap";
 
 const pluginScope: PluginScope = {} as PluginScope;
-
 pluginScope.player = new AudioPlayer(pluginScope);
 pluginScope.editor = new TimingEditor(pluginScope);
+
+Modal.jQueryInterface = $;
 
 $(document).on(
   "keydown",

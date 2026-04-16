@@ -5,10 +5,15 @@ import { fileURLToPath } from "url";
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 export const SAMPLE_LRC_PATH = resolve(__dirname, "../fixtures/sample.lrc");
 
+/** Wait for the editor to be ready. */
+export async function waitForEditor(page: Page) {
+  await page.locator(".editor").waitFor();
+}
+
 /** Navigate to the app and wait for the editor to be ready. */
 export async function gotoApp(page: Page) {
   await page.goto("/");
-  await page.locator(".editor.mode-edit").waitFor();
+  await waitForEditor(page);
 }
 
 /** Wait for a Bootstrap dialog to finish opening (`.show` class applied). */
@@ -16,9 +21,9 @@ export async function waitForDialog(page: Page) {
   await page.locator("#dialogOverlay.show").waitFor();
 }
 
-/** Wait for the currently-open Bootstrap dialog to be removed from the DOM. */
+/** Wait for the currently-open Bootstrap dialog to be fully hidden. */
 export async function waitForDialogClosed(page: Page) {
-  await page.locator("#dialogOverlay").waitFor({ state: "detached" });
+  await page.locator("#dialogOverlay").waitFor({ state: "hidden" });
 }
 
 /** Click a dialog button by its visible text. */

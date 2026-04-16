@@ -25,7 +25,8 @@
     "start": "vite --open",
     "lint": "eslint {src,tests}/**/*.{js,ts}",
     "lint:fix": "npm run lint -- --fix",
-    "test": "vitest"
+    "test": "vitest",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.2.0",

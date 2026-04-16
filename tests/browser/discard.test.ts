@@ -1,15 +1,12 @@
-import { test, expect } from "@playwright/test";
+import { expect, type Page, test } from "@playwright/test";
 import {
+  clickDialogButton,
   gotoApp,
   waitForDialog,
   waitForDialogClosed,
-  clickDialogButton,
 } from "./helpers";
 
-async function importLines(
-  page: import("@playwright/test").Page,
-  text: string,
-) {
+async function importLines(page: Page, text: string) {
   await page.locator("button:has-text('Import')").click();
   await page.locator("#lrcpastebtn").click();
   await waitForDialog(page);
@@ -17,6 +14,9 @@ async function importLines(
   await clickDialogButton(page, "Import");
   await waitForDialogClosed(page);
 }
+
+// Scope all entry counts to .editor to exclude the hidden #editor-entry-template.
+const entries = (page: Page) => page.locator(".editor .time-entry");
 
 test.beforeEach(async ({ page }) => {
   await gotoApp(page);
@@ -35,25 +35,27 @@ test("confirming discard resets the editor to a single blank entry", async ({
   page,
 }) => {
   await importLines(page, "Line one\nLine two\nLine three");
-  await expect(page.locator(".time-entry")).toHaveCount(4);
+  await expect(entries(page)).toHaveCount(4);
 
   await page.click("#lrcclrbtn");
   await waitForDialog(page);
   await clickDialogButton(page, "Yes");
   await waitForDialogClosed(page);
 
-  await expect(page.locator(".time-entry")).toHaveCount(1);
-  await expect(page.locator(".time-entry .text").first()).toHaveText("");
+  await expect(page.locator(".editor .time-entry")).toHaveCount(1);
+  await expect(page.locator(".editor .time-entry .text").first()).toHaveText(
+    "",
+  );
 });
 
 test("cancelling discard keeps all entries", async ({ page }) => {
   await importLines(page, "Line one\nLine two");
-  const countBefore = await page.locator(".time-entry").count();
+  const countBefore = await page.locator(".editor .time-entry").count();
 
   await page.click("#lrcclrbtn");
   await waitForDialog(page);
   await clickDialogButton(page, "No");
   await waitForDialogClosed(page);
 
-  await expect(page.locator(".time-entry")).toHaveCount(countBefore);
+  await expect(page.locator(".editor .time-entry")).toHaveCount(countBefore);
 });

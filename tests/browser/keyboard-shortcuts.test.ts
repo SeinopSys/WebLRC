@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import {
   gotoApp,
   loadSilentAudio,
@@ -40,7 +40,7 @@ test("Ctrl+Up on a focused timestamp increments it by 100ms", async ({
 }) => {
   const ts = page.locator(".time-entry .timestamp").first();
   await ts.click();
-  await ts.type("1:00.000");
+  await ts.fill("1:00.000");
   await ts.dispatchEvent("keyup");
   await page.keyboard.press("Control+ArrowUp");
   await expect(ts).toHaveText("1:00.100");
@@ -51,7 +51,7 @@ test("Ctrl+Down on a focused timestamp decrements it by 100ms", async ({
 }) => {
   const ts = page.locator(".time-entry .timestamp").first();
   await ts.click();
-  await ts.type("1:00.500");
+  await ts.fill("1:00.500");
   await ts.dispatchEvent("keyup");
   await page.keyboard.press("Control+ArrowDown");
   await expect(ts).toHaveText("1:00.400");
@@ -84,7 +84,7 @@ test("Period (.) stops playback", async ({ page }) => {
 
 // ─── Sync mode shortcuts ─────────────────────────────────────────────────────
 
-async function importLrcAndEnterSync(page: import("@playwright/test").Page) {
+async function importLrcAndEnterSync(page: Page) {
   await page.locator("button:has-text('Import')").click();
   await page.locator("#lrcpastebtn").click();
   await waitForDialog(page);

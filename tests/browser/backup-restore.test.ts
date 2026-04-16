@@ -45,7 +45,9 @@ test("restore backup dialog shows the backup JSON preview", async ({
 
   await page.click("#restore-backup");
   await waitForDialog(page);
-  await expect(page.locator(".backup-data")).toContainText("Backup Artist");
+  await expect(page.locator("#dialogContent .backup-data")).toContainText(
+    "Backup Artist",
+  );
 });
 
 test("confirming restore populates the editor with backup entries", async ({
@@ -61,9 +63,13 @@ test("confirming restore populates the editor with backup entries", async ({
   await clickDialogButton(page, "Yes");
   await waitForDialogClosed(page);
 
-  await expect(page.locator(".time-entry")).toHaveCount(2);
-  await expect(page.locator(".time-entry .text").first()).toHaveText("Hello");
-  await expect(page.locator(".time-entry .text").nth(1)).toHaveText("World");
+  await expect(page.locator(".editor .time-entry")).toHaveCount(2);
+  await expect(page.locator(".editor .time-entry .text").first()).toHaveText(
+    "Hello",
+  );
+  await expect(page.locator(".editor .time-entry .text").nth(1)).toHaveText(
+    "World",
+  );
 });
 
 test("confirming restore sets metadata from backup", async ({ page }) => {
@@ -91,7 +97,7 @@ test("cancelling restore keeps the editor empty", async ({ page }) => {
   await clickDialogButton(page, "No");
   await waitForDialogClosed(page);
 
-  await expect(page.locator(".time-entry")).toHaveCount(1);
+  await expect(page.locator(".editor .time-entry")).toHaveCount(1);
 });
 
 test("discarding backup hides the backup buttons and removes the localStorage key", async ({

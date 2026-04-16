@@ -13,8 +13,11 @@ test("editor starts in edit mode", async ({ page }) => {
   await expect(page.locator(".editor.mode-edit")).toBeVisible();
 });
 
-test("exactly one time-entry row exists on load", async ({ page }) => {
-  await expect(page.locator(".time-entry")).toHaveCount(1);
+test("editor starts with a single time-entry row (constructor init)", async ({
+  page,
+}) => {
+  // The TimingEditor constructor appends a blank .time-entry, so the initial count is 1.
+  await expect(page.locator(".editor .time-entry")).toHaveCount(1);
 });
 
 test("backup button group is hidden when no backup exists", async ({
