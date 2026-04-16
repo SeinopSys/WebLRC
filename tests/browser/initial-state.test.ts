@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("page title is correct", async ({ page }) => {
-  await expect(page).toHaveTitle("LRC Editor & Timer");
+  await expect(page).toHaveTitle(process.env.VITE_APP_TITLE);
 });
 
 test("editor starts in edit mode", async ({ page }) => {
