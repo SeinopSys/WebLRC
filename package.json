@@ -37,8 +37,7 @@
     "jsmediatags": "^3.9.7",
     "mp3tag.js": "^3.16.0",
     "throttle-debounce": "^5.0.2",
-    "typescript": "^6.0.2",
-    "vitest": "^4.1.4"
+    "typescript": "^6.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -61,6 +60,7 @@
     "prettier": "3.8.3",
     "sass": "^1.77.0",
     "typescript-eslint": "^8.58.2",
-    "vite": "^8.0.8"
+    "vite": "^8.0.8",
+    "vitest": "^4.1.4"
   }
 }

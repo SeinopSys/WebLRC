@@ -12,7 +12,7 @@
   <meta name="format-detection" content="telephone=no">
   <meta name="theme-color" content="#7aa7f0">
 
-  <title>LRC Editor &amp; Timer</title>
+  <title>%VITE_APP_TITLE%</title>
   <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss">
   <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/scss/solid.scss">
   <link rel="stylesheet" href="src/styles/theme.scss">
@@ -20,6 +20,39 @@
 </head>
 <body>
 <div id="wrap">
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light shadow">
+    <div class="container">
+      <a class="navbar-brand" href="%VITE_HOMEPAGE_URL%" title="Home"></a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#app-navbar-collapse"
+              aria-controls="app-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="app-navbar-collapse">
+        <!-- Left Side Of Navbar -->
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a href="%VITE_APP_URL%" class="nav-link active">%VITE_APP_TITLE%</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+              <span class="fa fa-globe-americas me-2"></span> English
+            </a>
+            <div class="dropdown-menu language-selector" role="menu">
+              <a class="dropdown-item current" data-current="Current">
+                <img src="./src/img/lang/en.svg" class="language-flag" alt="en flag">
+                <span>English</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
   <div class="py-4 ">
     <div class="container">
       <div class="row justify-content-center">
@@ -39,7 +72,7 @@
                   id="shortcut-info"
                 >
                   <span class="fa fa-info-circle"></span></button>
-                <div class="btn-group d-none">
+                <span class="btn-group d-none">
                   <button
                     class="btn btn-success"
                     title="Restore automatic backup…"
@@ -52,7 +85,7 @@
                     id="clear-backup"
                   >
                     <span class="fa fa-trash-can"></span></button>
-                </div>
+                </span>
               </h3>
 
               <fieldset>
@@ -196,56 +229,7 @@
                     </div>
                   </div>
                   <div class="editor-wrap">
-                    <div class="editor mode-edit">
-                      <div class="time-entry">
-                        <div class="tools tools-start btn-group">
-                          <button
-                            class="btn btn-warning goto text-nowrap"
-                            title="Jump to timestamp"
-                            disabled="disabled"
-                          >
-                            <span class="fa fa-step-forward"></span></button>
-                          <div class="btn-group-vertical step-buttons">
-                            <button
-                              class="btn btn-primary step-forward text-nowrap"
-                              title="Step forward 100ms"
-                            >
-                              <span class="fa fa-caret-up"></span></button>
-                            <button
-                              class="btn btn-primary step-backward text-nowrap"
-                              title="Step backward 100ms"
-                            >
-                              <span class="fa fa-caret-down"></span></button>
-                          </div>
-                        </div>
-                        <span class="timestamp" contenteditable="" data-empty="0:00.000"></span>
-                        <span class="text" contenteditable="" data-empty="&lt;break&gt;"></span>
-                        <div class="tools tools-end btn-group">
-                          <button
-                            class="btn btn-success addrow-up edit-only text-nowrap"
-                            title="Add row above"
-                          >
-                            <span class="fa fa-arrow-turn-up fa-fw"></span></button>
-                          <button
-                            class="btn btn-success addrow-down edit-only text-nowrap"
-                            title="Add row below"
-                          >
-                            <span class="fa fa-arrow-turn-down fa-fw"></span></button>
-                          <button
-                            class="btn btn-danger remrow edit-only text-nowrap"
-                            title="Remove row…"
-                            disabled="disabled"
-                          >
-                            <span class="fa fa-trash fa-fw"></span></button>
-                          <button
-                            class="btn btn-warning goto text-nowrap"
-                            title="Jump to timestamp"
-                            disabled="disabled"
-                          >
-                            <span class="fa fa-step-forward fa-fw"></span></button>
-                        </div>
-                      </div>
-                    </div>
+                    <div class="editor mode-edit"></div>
                     <div class="alert alert-info editor-no-scroll">
                       <span class="fa fa-info-circle me-2"></span>If your cursor is above the editor
                       it won't automatically scroll the current entry into view.
@@ -475,9 +459,11 @@
 </div>
 
 <footer>
-  <span>Website built with <a href="https://getbootstrap.com/">Bootstrap 5</a> and <a href="https://fontawesome.com/license/free">Font Awesome Free</a></span>
+    <span>Website built with <a href="https://getbootstrap.com/">Bootstrap 5</a> and <a
+      href="https://fontawesome.com/license/free">Font Awesome Free</a></span>
   <span>Open-Source Software</span>
   <span>MIT-licensed</span>
+  <span><a href="%VITE_REPOSITORY_URL%">View source code</a></span>
   <span>© SeinopSys, 2016-2026</span>
 </footer>
 

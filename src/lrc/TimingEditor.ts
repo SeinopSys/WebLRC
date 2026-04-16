@@ -484,9 +484,9 @@ export class TimingEditor {
 
   private toggleBackupButtons(enabled: boolean) {
     if (enabled) {
-      this.$restoreBackupBtn.parent().removeClass("d-none");
+      this.$restoreBackupBtn.parent().removeClass("d-none").addClass("d-block");
     } else {
-      this.$restoreBackupBtn.parent().addClass("d-none");
+      this.$restoreBackupBtn.parent().removeClass("d-block").addClass("d-none");
     }
   }
 
