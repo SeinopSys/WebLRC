@@ -1,5 +1,4 @@
 import { throttle } from "throttle-debounce";
-import { Dialog } from "./dialog";
 import { Key } from "./utils/Key";
 import { AudioPlayer } from "./lrc/AudioPlayer";
 import { PluginScope } from "./lrc/PluginScope";
@@ -120,7 +119,7 @@ $(document.body)
     if ($this.text().trim().length === 0) $this.empty();
   });
 
-const $ist = $("#info-shortcuts-template");
+const $ist = $("#info-shortcuts");
 if (
   "userAgent" in navigator &&
   /(macos|iphone|os ?x|ip[ao]d)/i.test(navigator.userAgent)
@@ -128,11 +127,5 @@ if (
   $ist.find("kbd:contains(Shift)").html("&#x2325;");
   $ist.find("kbd:contains(Ctrl)").html("&#x2318;");
 }
-$("#shortcut-info").on("click", function (e) {
-  e.preventDefault();
-
-  const title = $(this).attr("title") as string;
-  Dialog.info(title, $ist.clone().children());
-});
 
 Object.assign(window, { Plugin: pluginScope });

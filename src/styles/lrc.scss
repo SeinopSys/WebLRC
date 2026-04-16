@@ -9,11 +9,6 @@ $thumbHeight: 16px;
 $thumbWidth: 7px;
 $thumbBorder: 2px;
 
-#shortcut-info {
-  font-size: .75em;
-  margin-left: .4em;
-}
-
 .fileinput {
   width: 0;
   height: 0;
@@ -155,7 +150,6 @@ $thumbBorder: 2px;
         position: absolute;
         top: 0;
         left: 0;
-        will-change: left;
         z-index: 4;
 
         &:before {
