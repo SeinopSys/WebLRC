@@ -136,7 +136,7 @@ export class TimingEditor {
           $form.on("submit", (se) => {
             se.preventDefault();
 
-            Dialog.wait(false, "Importing");
+            Dialog.wait(false, pageProps.jsLocales.importing);
             this.importFromText(
               $form.find<HTMLTextAreaElement>("textarea").prop("value") || "",
             );
@@ -191,7 +191,7 @@ export class TimingEditor {
       e.preventDefault();
 
       Dialog.confirm({
-        title: $(e.target).text(),
+        title: pageProps.jsLocales.btn_discard_lyrics,
         handlerFunc: (sure) => {
           if (!sure) return;
 
@@ -590,7 +590,7 @@ export class TimingEditor {
           $form.on("submit", (se) => {
             se.preventDefault();
 
-            Dialog.wait(false, "Importing");
+            Dialog.wait(false, pageProps.jsLocales.importing);
             this.importFromText(importText, false);
             Dialog.close();
           });
