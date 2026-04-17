@@ -1,4 +1,5 @@
 @import "vars";
+@import "mixins";
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins";
@@ -46,6 +47,10 @@ body {
 
   #wrap {
     background: #678ecb;
+
+    @include dark-theme {
+      background: darken(#678ecb, 20%);
+    }
   }
 
   > footer {
@@ -83,6 +88,10 @@ nav {
     background-size: contain;
     background-image: url('../img/logo-dark.svg');
     width: 2.8 * $nav-link-height;
+
+    @include dark-theme {
+      background-image: url('../img/logo.svg');
+    }
   }
 
   .language-selector {

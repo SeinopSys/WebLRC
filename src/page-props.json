@@ -55,6 +55,7 @@
     },
     "importing": "Importing",
     "nav_legacy": "Legacy version",
+    "btn_toggle_theme": "Toggle dark mode",
     "legend_audio_player": "Audio Player",
     "btn_select_audio": "Select audio file",
     "btn_play_pause": "Play/Pause",

@@ -5,6 +5,9 @@ import { PluginScope } from "./lrc/PluginScope";
 import { TimingEditor } from "./lrc/TimingEditor";
 import $ from "jquery";
 import { Modal } from "bootstrap";
+import { initTheme, toggleTheme } from "./theme";
+
+initTheme();
 
 const pluginScope: PluginScope = {} as PluginScope;
 pluginScope.player = new AudioPlayer(pluginScope);
@@ -129,3 +132,5 @@ if (
 }
 
 Object.assign(window, { Plugin: pluginScope });
+
+$("#theme-toggle").on("click", toggleTheme);

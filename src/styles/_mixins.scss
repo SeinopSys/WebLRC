@@ -1,0 +1,23 @@
+@mixin dark-theme {
+  html[data-bs-theme='dark'] & {
+    @content;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html:not([data-bs-theme]) & {
+      @content;
+    }
+  }
+}
+
+@mixin dark-theme-parent {
+  html[data-bs-theme='dark'] {
+    @content;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html:not([data-bs-theme]) {
+      @content;
+    }
+  }
+}

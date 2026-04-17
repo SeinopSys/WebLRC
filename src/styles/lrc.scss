@@ -1,4 +1,5 @@
 @import "vars";
+@import "mixins";
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 
@@ -434,6 +435,45 @@ $thumbBorder: 2px;
     &[readonly] {
       cursor: default;
       background-color: rgba(0, 0, 0, .1);
+    }
+  }
+}
+
+#timings .editor-wrap .editor {
+  @include dark-theme {
+    border-color: rgba($Favcolor, .2);
+    background: rgba($Favcolor, .05);
+
+    &:hover {
+      border-color: rgba($Favcolor, .4);
+    }
+
+    &.mode-edit .time-entry {
+      .timestamp, .text {
+        background: var(--bs-body-bg);
+        border-color: rgba(white, .15);
+      }
+    }
+
+    &.mode-sync .time-entry {
+      .timestamp, .text {
+        border-color: rgba(white, .08);
+        background-color: rgba(white, .08);
+      }
+    }
+
+    .time-entry {
+      &.nowplaying .timestamp,
+      &.nowplaying .text {
+        color: #4caf50;
+        background-color: rgba(#4caf50, .15);
+      }
+
+      &.sync-handle .timestamp,
+      &.sync-handle .text {
+        color: #90caf9;
+        background-color: rgba(#90caf9, .15);
+      }
     }
   }
 }
